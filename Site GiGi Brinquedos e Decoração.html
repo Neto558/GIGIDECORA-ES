@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site GiGi Brinquedos e Decoração</title>
+  <meta name="description" content="Decoração de festas infantis, chá de bebê, chá revelação e 15 anos em Pirassununga e região. Cenários personalizados, balões, cilindros e montagem completa no local da sua festa.">
+
+  <!-- Fontes Google permitidas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Basecoat & Shell do Sistema -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <style>
+/* Skip artifact shell — fixed styles served beside every artifact.
+   Complements basecoat; artifacts override --accent for their own identity. */
+:root {
+  color-scheme: light dark;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --accent-text: color-mix(in srgb, var(--accent) 72%, #000);
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --text: #14171f;
+  --text-muted: #5b6472;
+  --border: rgba(20, 23, 31, 0.10);
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 23, 31, 0.08);
+  --space: 16px;
+}
+/* Theme resolution. Without data-theme the viewer's system preference decides,
+   as it always did. With it, the artifact's own choice wins in BOTH directions:
+   a page that hardcodes one palette must not be handed the opposite set of
+   tokens by the machine it happens to be opened on. The dark values appear
+   twice because a media query cannot be folded into a selector list.
+   The attribute sits inside :where() so these blocks keep the specificity of a
+   bare :root — the page's own <style> is linked after this file and must go on
+   overriding any token it wants, exactly as it could before. */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+    --bg: #101318;
+    --surface: #181c23;
+    --text: #eef1f6;
+    --text-muted: #9aa4b2;
+    --border: rgba(238, 241, 246, 0.12);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+:root:where([data-theme="dark"]) {
+  color-scheme: dark;
+  --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+  --bg: #101318;
+  --surface: #181c23;
+  --text: #eef1f6;
+  --text-muted: #9aa4b2;
+  --border: rgba(238, 241, 246, 0.12);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+:root:where([data-theme="light"]) { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+
+.shell-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.shell-section { padding: calc(var(--space) * 2) 0; }
+.shell-grid { display: grid; gap: var(--space); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.shell-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: var(--space); }
+.shell-footer { padding: 24px 0 40px; color: var(--text-muted); font-size: 13px; }
+
+.shell-hero { padding: calc(var(--space) * 3) 0 calc(var(--space) * 2); }
+.shell-hero h1 { font-size: clamp(26px, 4vw, 40px); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+.shell-hero p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space);
+}
+
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi .kpi-value { font-size: 28px; font-weight: 650; line-height: 1.1; }
+.kpi .kpi-label { font-size: 13px; color: var(--text-muted); }
+.kpi .kpi-delta { font-size: 12.5px; font-weight: 600; }
+.kpi .kpi-delta.up { color: #0a8f3c; }
+.kpi .kpi-delta.down { color: #cf3131; }
+
+table.shell-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.shell-table th {
+  text-align: left; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+table.shell-table th, table.shell-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--border); }
+table.shell-table td.num, table.shell-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.chart-box { width: 100%; min-height: 220px; }
+.chart-box svg { width: 100%; height: auto; display: block; }
+
+.muted { color: var(--text-muted); }
+.accent { color: var(--accent-text); }
+.shell-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell-fade { animation: shell-fade 400ms ease both; }
+  @keyframes shell-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+
+</style>
+  
+
+  <style>
+    :root {
+      --accent: #d946ef;
+      --accent-text: #86198f;
+      --accent-contrast: #ffffff;
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-alt: #ffffff;
+      --text: #1e1322;
+      --text-muted: #4e354a;
+      --border: #f5d0ea;
+      --radius: 20px;
+      --whatsapp-color: #16a34a;
+      --whatsapp-hover: #15803d;
+      --whatsapp-pop: #22c55e;
+      --whatsapp-text: #ffffff;
+      --font-display: 'Baloo 2', cursive, sans-serif;
+      --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+      line-height: 1.25;
+      color: #3b1b36;
+      margin-top: 0;
+    }
+
+    /* Utilitários & Acessibilidade */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* HEADER FIXO */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid #fae8f3;
+      transition: box-shadow 0.25s ease;
+    }
+    .site-header.scrolled {
+      box-shadow: 0 4px 20px rgba(180, 80, 140, 0.08);
+    }
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+      padding: 0 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #93199e;
+    }
+    .brand-logo svg {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 4px rgba(217, 70, 239, 0.2));
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.5px;
+      color: #93199e;
+    }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0d8396;
+      margin-top: 2px;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-link {
+      color: #4a3848;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.98rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+    .nav-link:hover, .nav-link:focus-visible {
+      color: #93199e;
+      background: #fae8f3;
+      outline: none;
+    }
+
+    .btn-wa-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--whatsapp-color);
+      color: var(--whatsapp-text) !important;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(18, 140, 126, 0.25);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-wa-header:hover {
+      background-color: var(--whatsapp-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(18, 140, 126, 0.35);
+    }
+
+    /* Menu mobile */
+    .mobile-menu-btn {
+      display: none;
+      background: #fdf2f8;
+      border: 1px solid #f9a8d4;
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+      color: #93199e;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      position: relative;
+      background: radial-gradient(circle at 10% 20%, rgba(253, 230, 245, 0.95) 0%, rgba(240, 249, 255, 0.9) 45%, rgba(250, 242, 255, 0.95) 100%);
+      padding: 4.8rem 1.25rem 5.8rem;
+      overflow: hidden;
+      border-bottom: 2px solid #f9d8ec;
+    }
+    .hero-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 2px solid #f472b6;
+      color: #701a75;
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 0.45rem 1.25rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 16px rgba(217, 70, 239, 0.18);
+    }
+    .hero-headline {
+      font-size: clamp(2.35rem, 5.6vw, 3.9rem);
+      font-weight: 800;
+      color: #2b0c27;
+      margin-bottom: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-headline span.highlight {
+      color: #a21caf;
+      background: linear-gradient(120deg, #c026d3 0%, #db2777 50%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      text-shadow: none;
+    }
+    .hero-subheadline {
+      font-size: clamp(1.12rem, 2.2vw, 1.38rem);
+      color: #43243f;
+      max-width: 780px;
+      margin: 0 auto 2.4rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+    .btn-hero-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #ffffff;
+      font-size: 1.18rem;
+      font-weight: 800;
+      padding: 0.95rem 2.2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(5, 150, 105, 0.38);
+      transition: all 0.25s ease;
+    }
+    .btn-hero-wa:hover {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(5, 150, 105, 0.48);
+    }
+    .btn-hero-portfolio {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #ffffff;
+      color: #701a75;
+      border: 2.5px solid #ec4899;
+      font-size: 1.15rem;
+      font-weight: 800;
+      padding: 0.92rem 1.9rem;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.22);
+      transition: all 0.25s ease;
+    }
+    .btn-hero-portfolio:hover {
+      background-color: #fdf2f8;
+      transform: translateY(-3px);
+      border-color: #be185d;
+      color: #500724;
+    }
+
+    /* Balões flutuantes decorativos inline */
+    .balloon-floating {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      animation: floatBalloon 6s ease-in-out infinite alternate;
+      opacity: 0.85;
+    }
+    .b-1 { top: 12%; left: 4%; width: 56px; animation-duration: 5.5s; }
+    .b-2 { top: 20%; right: 6%; width: 68px; animation-duration: 7s; animation-delay: 1s; }
+    .b-3 { bottom: 15%; left: 8%; width: 48px; animation-duration: 6.2s; animation-delay: 2s; }
+    .b-4 { bottom: 10%; right: 10%; width: 58px; animation-duration: 5.8s; animation-delay: 0.5s; }
+    .star-confetti {
+      position: absolute;
+      pointer-events: none;
+      animation: pulseStar 4s ease-in-out infinite alternate;
+    }
+    .s-1 { top: 28%; left: 18%; width: 22px; color: #f59e0b; }
+    .s-2 { top: 15%; right: 22%; width: 26px; color: #a855f7; }
+    .s-3 { bottom: 22%; right: 28%; width: 20px; color: #06b6d4; }
+
+    @keyframes floatBalloon {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(3deg); }
+      100% { transform: translateY(-32px) rotate(-3deg); }
+    }
+    @keyframes pulseStar {
+      0% { transform: scale(0.85) rotate(0deg); opacity: 0.6; }
+      100% { transform: scale(1.15) rotate(45deg); opacity: 1; }
+    }
+
+    /* BARRA DE CONFIANÇA */
+    .trust-bar {
+      background: #ffffff;
+      border-bottom: 2px solid #fae8f3;
+      padding: 1.5rem 1.25rem;
+      position: relative;
+      z-index: 3;
+    }
+    .trust-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.75rem 1rem;
+      background: #fdf5f9;
+      border-radius: 16px;
+      border: 1px solid #fce7f3;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .trust-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(217, 70, 239, 0.08);
+    }
+    .trust-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trust-text {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #382436;
+      line-height: 1.35;
+    }
+
+    /* SEÇÃO COMUM */
+    .section-wrap {
+      padding: 5rem 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 2.8rem;
+    }
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #a21caf;
+      background: #fdf2f8;
+      border: 1.5px solid #f472b6;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 3px 10px rgba(244, 114, 182, 0.2);
+    }
+    .section-title {
+      font-size: clamp(2.1rem, 4.2vw, 2.9rem);
+      font-weight: 800;
+      color: #2b0c27;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
+    }
+    .section-title .title-gradient-vibrant {
+      background: linear-gradient(120deg, #ec4899 0%, #a855f7 35%, #06b6d4 75%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline;
+    }
+    .section-desc {
+      font-size: 1.12rem;
+      color: #4a3447;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    /* BANNER DESTAQUE DO PORTFÓLIO */
+    .portfolio-highlight-banner {
+      max-width: 980px;
+      margin: 0 auto 2.8rem;
+      background: #ffffff;
+      border: 2px solid transparent;
+      background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(120deg, #ec4899, #8b5cf6, #06b6d4, #f59e0b);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      border-radius: 24px;
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      box-shadow: 0 10px 28px rgba(236, 72, 153, 0.12), 0 4px 12px rgba(6, 182, 212, 0.08);
+      position: relative;
+    }
+    .portfolio-highlight-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+    }
+    .portfolio-highlight-text {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #2b0c27;
+      line-height: 1.5;
+    }
+    .portfolio-highlight-text strong {
+      color: #a21caf;
+      font-weight: 800;
+    }
+    .portfolio-highlight-text .highlight-dream {
+      color: #0284c7;
+      font-weight: 800;
+    }
+
+    /* FILTROS DO PORTFÓLIO */
+    .portfolio-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2.8rem;
+    }
+    .filter-btn {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      font-weight: 800;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      border: 2px solid #f0abfc;
+      background: #ffffff;
+      color: #4a2143;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(217, 70, 239, 0.1);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .filter-btn:hover {
+      border-color: #ec4899;
+      color: #86198f;
+      background: #fdf2f8;
+      transform: translateY(-2px);
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, #ec4899 0%, #9333ea 100%);
+      border-color: #9333ea;
+      color: #ffffff;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.38);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.85rem;
+    }
+
+    /* CARD DECORAÇÃO COM BORDAS SUPERIORES ARCO-ÍRIS */
+    .decor-card {
+      background: #ffffff;
+      border-radius: 22px;
+      border: 1.5px solid #fce7f3;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(217, 70, 239, 0.08), 0 2px 8px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+      position: relative;
+      border-top-width: 6px;
+    }
+    /* Bordas superiores em cores vivas e diferenciadas */
+    .decor-card.c-pink    { border-top-color: #ec4899; box-shadow: 0 8px 24px rgba(236, 72, 153, 0.12); }
+    .decor-card.c-amber   { border-top-color: #f59e0b; box-shadow: 0 8px 24px rgba(245, 158, 11, 0.12); }
+    .decor-card.c-purple  { border-top-color: #a855f7; box-shadow: 0 8px 24px rgba(168, 85, 247, 0.12); }
+    .decor-card.c-teal    { border-top-color: #06b6d4; box-shadow: 0 8px 24px rgba(6, 182, 212, 0.12); }
+    .decor-card.c-emerald { border-top-color: #10b981; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12); }
+    .decor-card.c-rose    { border-top-color: #f43f5e; box-shadow: 0 8px 24px rgba(244, 63, 94, 0.12); }
+    .decor-card.c-blue    { border-top-color: #0284c7; box-shadow: 0 8px 24px rgba(2, 132, 199, 0.12); }
+    .decor-card.c-indigo  { border-top-color: #6366f1; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12); }
+    .decor-card.c-orange  { border-top-color: #ea580c; box-shadow: 0 8px 24px rgba(234, 88, 12, 0.12); }
+    .decor-card.c-lime    { border-top-color: #84cc16; box-shadow: 0 8px 24px rgba(132, 204, 22, 0.12); }
+
+    .decor-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(217, 70, 239, 0.2), 0 8px 20px rgba(6, 182, 212, 0.12);
+    }
+    .card-banner {
+      height: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 1.25rem;
+      text-align: center;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+    }
+    .card-banner svg.theme-svg {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .decor-card:hover .card-banner svg.theme-svg {
+      transform: scale(1.15) rotate(5deg);
+    }
+    .card-banner .banner-tag {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* IMAGENS REAIS EMBUTIDAS (object-fit: cover, border-radius e sombra suave) */
+    .card-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 230px;
+      overflow: hidden;
+      background: #fce7f3;
+      padding: 0;
+      aspect-ratio: 16 / 10;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 -20px 25px rgba(0, 0, 0, 0.15);
+    }
+    .decor-card:hover .card-img-wrap img {
+      transform: scale(1.08);
+    }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #f59e0b;
+      color: #ffffff;
+      font-size: 0.76rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .card-badge.badge-real {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
+    }
+    .card-badge.badge-custom {
+      background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.45);
+    }
+    .card-body {
+      padding: 1.45rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      background: #ffffff;
+    }
+    .card-title {
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: #2e0828;
+      margin-bottom: 0.5rem;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #4a3348;
+      font-weight: 600;
+      margin-bottom: 1.35rem;
+      flex-grow: 1;
+      line-height: 1.55;
+    }
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff !important;
+      border: none;
+      font-weight: 800;
+      font-size: 0.96rem;
+      padding: 0.78rem 1.25rem;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+      transition: all 0.25s ease;
+    }
+    .card-cta:hover {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #ffffff !important;
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.45);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* AVISO DE RODAPÉ DO PORTFÓLIO */
+    .portfolio-footer-note {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.2rem 1.6rem;
+      background: #ffffff;
+      border: 1.5px solid #fce7f3;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #86198f;
+      font-weight: 700;
+      font-size: 0.98rem;
+      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.08);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .portfolio-footer-wrap {
+      text-align: center;
+    }
+
+    /* DIFERENCIAIS */
+    .diferenciais-section {
+      background-color: #ffffff;
+      border-top: 2px solid #fae8f3;
+      border-bottom: 2px solid #fae8f3;
+    }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+    .dif-card {
+      background: #ffffff;
+      padding: 2rem 1.5rem;
+      border-radius: 22px;
+      border: 2px solid #fae8f3;
+      box-shadow: 0 6px 18px rgba(217, 70, 239, 0.07);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .dif-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(217, 70, 239, 0.16);
+      border-color: #f472b6;
+    }
+    .dif-icon-wrap {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.25s ease;
+    }
+    .dif-card:hover .dif-icon-wrap {
+      transform: scale(1.1) rotate(4deg);
+    }
+    .dif-card h3 {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: #3b1b36;
+      margin-bottom: 0.5rem;
+    }
+    .dif-card p {
+      font-size: 0.96rem;
+      color: #4f3b4d;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* DEPOIMENTOS */
+    .depoimentos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .depoimento-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 2rem 1.75rem;
+      border: 1.5px solid #fae8f3;
+      box-shadow: 0 8px 24px rgba(180, 80, 140, 0.06);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .depoimento-stars {
+      display: flex;
+      gap: 4px;
+      color: #f59e0b;
+      margin-bottom: 1rem;
+    }
+    .depoimento-texto {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #402c3d;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+    .depoimento-autor {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px dashed #f0deea;
+      padding-top: 1.1rem;
+    }
+    .avatar-circ {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fce7f3;
+      color: #93199e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
+      border: 2px solid #fbcfe8;
+    }
+    .autor-info strong {
+      display: block;
+      color: #381b33;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .autor-info span {
+      font-size: 0.85rem;
+      color: #0d8396;
+      font-weight: 700;
+    }
+
+    /* COMO FUNCIONA */
+    .como-funciona-section {
+      background: #faf5ff;
+      border-top: 2px solid #f3e8ff;
+      border-bottom: 2px solid #f3e8ff;
+    }
+    .passos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      position: relative;
+    }
+    .passo-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.2rem 1.4rem;
+      border: 1.5px solid #ede9fe;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.05);
+      position: relative;
+    }
+    .passo-numero {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #a855f7;
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 6px 16px rgba(168, 85, 247, 0.35);
+    }
+    .passo-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .passo-card p {
+      font-size: 0.95rem;
+      color: #554152;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* CONTATO E CTA FINAL */
+    .contato-section {
+      padding: 5rem 1.25rem;
+      background-color: #ffffff;
+    }
+    .contato-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    /* Banner Principal de Conversão WhatsApp */
+    .contato-banner {
+      background: linear-gradient(135deg, #701a75 0%, #4a044e 50%, #1e1b4b 100%);
+      border-radius: 26px;
+      padding: 3.5rem 2.5rem;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(112, 26, 117, 0.35);
+      position: relative;
+      overflow: hidden;
+      border: 3px solid rgba(244, 114, 182, 0.45);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .contato-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.5) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .contato-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .contato-banner h2 {
+      color: #ffffff;
+      font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+      margin-bottom: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+    .contato-banner p {
+      font-size: 1.12rem;
+      color: #fce7f3;
+      max-width: 540px;
+      margin: 0 auto 1.8rem;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-contato-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #ffffff !important;
+      font-size: 1.22rem;
+      font-weight: 900;
+      padding: 1.1rem 2.4rem;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 28px rgba(34, 197, 94, 0.5);
+      transition: all 0.25s ease;
+      margin-bottom: 1.8rem;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-contato-wa:hover {
+      background: linear-gradient(135deg, #4ade80 0%, #15803d 100%);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 34px rgba(34, 197, 94, 0.65);
+    }
+    .contato-info-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 18px;
+      padding: 1.2rem 1.4rem;
+      width: 100%;
+      max-width: 500px;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+    .contato-info-box p {
+      margin: 0.35rem 0;
+      color: #fdf2f8;
+      font-size: 0.94rem;
+    }
+    .contato-info-box strong {
+      color: #ffffff;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: #231120;
+      color: #fce7f3;
+      padding: 3.5rem 1.25rem 2rem;
+      border-top: 1px solid #3d1b38;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .footer-brand .footer-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #f472b6;
+      margin: 0;
+    }
+    .footer-brand p {
+      margin: 0;
+      color: #d1b4cb;
+      font-size: 0.95rem;
+      max-width: 380px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #fce7f3;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover {
+      color: #f472b6;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1.8rem auto 0;
+      text-align: center;
+      font-size: 0.88rem;
+      color: #b592ae;
+    }
+
+    /* BOTÃO FLUTUANTE WHATSAPP */
+    .wa-float-btn {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 99;
+      background-color: var(--whatsapp-color);
+      color: #ffffff;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(18, 140, 126, 0.4);
+      text-decoration: none;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+      animation: pulseWa 2.8s infinite;
+    }
+    .wa-float-btn:hover {
+      background-color: var(--whatsapp-hover);
+      transform: scale(1.1);
+    }
+    .wa-float-btn svg {
+      width: 36px;
+      height: 36px;
+      fill: #ffffff;
+    }
+    @keyframes pulseWa {
+      0% {
+        box-shadow: 0 0 0 0 rgba(18, 140, 126, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(18, 140, 126, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(18, 140, 126, 0);
+      }
+    }
+
+    /* ANIMAÇÃO DE ENTRADA AO ROLAR */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 860px) {
+      .main-nav {
+        display: none;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 1.5rem;
+        border-bottom: 2px solid #fae8f3;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        gap: 1rem;
+      }
+      .main-nav.open {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .btn-wa-header {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.95rem;
+      }
+      .portfolio-highlight-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-section {
+        padding: 3.5rem 1rem 4.5rem;
+      }
+      .section-wrap {
+        padding: 3.5rem 1rem;
+      }
+      .balloon-floating {
+        opacity: 0.55;
+      }
+      .contato-banner {
+        padding: 2.2rem 1.2rem;
+      }
+      .wa-float-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 58px;
+        height: 58px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER FIXO -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-wrap">
+      <a href="#inicio" class="brand-logo" aria-label="GiGi Brinquedos e Decoração - Início">
+        <!-- Ícone Ursinho SVG Decorativo -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="32" cy="38" rx="22" ry="20" fill="#f472b6"/>
+          <circle cx="16" cy="20" r="10" fill="#f472b6"/>
+          <circle cx="16" cy="20" r="5" fill="#fbcfe8"/>
+          <circle cx="48" cy="20" r="10" fill="#f472b6"/>
+          <circle cx="48" cy="20" r="5" fill="#fbcfe8"/>
+          <circle cx="32" cy="36" r="18" fill="#fdf2f8"/>
+          <circle cx="26" cy="32" r="2.5" fill="#3b1b36"/>
+          <circle cx="38" cy="32" r="2.5" fill="#3b1b36"/>
+          <ellipse cx="32" cy="39" rx="4.5" ry="3" fill="#ec4899"/>
+          <path d="M30 42 C30 44, 34 44, 34 42" stroke="#ec4899" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="22" cy="36" r="3" fill="#f472b6" opacity="0.4"/>
+          <circle cx="42" cy="36" r="3" fill="#f472b6" opacity="0.4"/>
+          <path d="M32 46 L35 50 L29 50 Z" fill="#38bdf8"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title">GiGi</span>
+          <span class="brand-subtitle">Brinquedos & Decoração</span>
+        </div>
+      </a>
+
+      <!-- Navegação Desktop -->
+      <nav class="main-nav" id="mainNav">
+        <a href="#inicio" class="nav-link">Início</a>
+        <a href="#portfolio" class="nav-link">Portfólio</a>
+        <a href="#diferenciais" class="nav-link">Diferenciais</a>
+        <a href="#depoimentos" class="nav-link">Depoimentos</a>
+        <a href="#como-funciona" class="nav-link">Como Funciona</a>
+        <a href="#contato" class="nav-link">Contato</a>
+      </nav>
+
+      <!-- Botão Único WhatsApp no Header à Direita do Menu -->
+      <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20GiGi%20e%20quero%20um%20or%C3%A7amento%20de%20decora%C3%A7%C3%A3o%20%F0%9F%8E%88"
+         target="_blank" rel="noopener noreferrer"
+         class="btn-wa-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.031 2C6.511 2 2.016 6.477 2.016 11.979c0 1.948.563 3.766 1.536 5.304L2 22l4.877-1.508a9.928 9.928 0 005.154 1.488h.004c5.52 0 10.015-4.477 10.015-9.98C22.05 6.477 17.551 2 12.031 2zm0 18.28c-1.636 0-3.238-.44-4.636-1.272l-.332-.198-3.447 1.066 1.085-3.351-.217-.344a8.232 8.232 0 01-1.263-4.202c0-4.57 3.738-8.288 8.337-8.288 4.598 0 8.336 3.718 8.336 8.288 0 4.57-3.738 8.288-8.336 8.288zm4.568-6.196c-.25-.125-1.479-.73-1.708-.813-.23-.083-.396-.125-.563.125-.167.25-.646.813-.792.98-.146.166-.292.187-.542.062-.25-.125-1.055-.389-2.01-1.24-.743-.663-1.245-1.482-1.391-1.732-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.563-1.355-.771-1.855-.203-.487-.41-.42-.563-.428l-.48-.01c-.167 0-.438.062-.667.312-.23.25-.875.855-.875 2.084 0 1.23 8.96 2.417 1.021 2.584.125.167 1.763 2.692 4.271 3.775.597.258 1.063.412 1.427.528.6.191 1.146.164 1.577.1.48-.072 1.479-.604 1.688-1.188.208-.583.208-1.083.146-1.188-.063-.104-.229-.167-.479-.292z"/>
+        </svg>
+        Peça seu orçamento
+      </a>
+
+      <!-- Gatilho Menu Mobile -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu de navegação">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="inicio">
+      <!-- Balões decorativos animados -->
+      <div class="balloon-floating b-1" aria-hidden="true">
+        <svg viewBox="0 0 100 130" fill="none">
+          <ellipse cx="50" cy="55" rx="42" ry="50" fill="#f472b6"/>
+          <path d="M50 105 L44 115 L56 115 Z" fill="#ec4899"/>
+          <path d="M50 115 Q42 125 50 135" stroke="#ec4899" stroke-width="2" fill="none"/>
+          <ellipse cx="35" cy="40" rx="8" ry="16" fill="#ffffff" opacity="0.4" transform="rotate(-20 35 40)"/>
+        </svg>
+      </div>
+      <div class="balloon-floating b-2" aria-hidden="true">
+        <svg viewBox="0 0 100 130" fill="none">
+          <ellipse cx="50" cy="55" rx="42" ry="50" fill="#38bdf8"/>
+          <path d="M50 105 L44 115 L56 115 Z" fill="#0284c7"/>
+          <path d="M50 115 Q58 125 50 135" stroke="#0284c7" stroke-width="2" fill="none"/>
+          <ellipse cx="35" cy="40" rx="8" ry="16" fill="#ffffff" opacity="0.4" transform="rotate(-20 35 40)"/>
+        </svg>
+      </div>
+      <div class="balloon-floating b-3" aria-hidden="true">
+        <svg viewBox="0 0 100 130" fill="none">
+          <ellipse cx="50" cy="55" rx="42" ry="50" fill="#c084fc"/>
+          <path d="M50 105 L44 115 L56 115 Z" fill="#9333ea"/>
+          <path d="M50 115 Q42 125 50 135" stroke="#9333ea" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div class="balloon-floating b-4" aria-hidden="true">
+        <svg viewBox="0 0 100 130" fill="none">
+          <ellipse cx="50" cy="55" rx="42" ry="50" fill="#fde047"/>
+          <path d="M50 105 L44 115 L56 115 Z" fill="#eab308"/>
+          <path d="M50 115 Q58 125 50 135" stroke="#eab308" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Estrelinhas e confetes inline -->
+      <div class="star-confetti s-1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6l-6.3 4.4 2.3-7.2-6-4.4h7.6z"/></svg>
+      </div>
+      <div class="star-confetti s-2" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6l-6.3 4.4 2.3-7.2-6-4.4h7.6z"/></svg>
+      </div>
+      <div class="star-confetti s-3" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.6l-6.3 4.4 2.3-7.2-6-4.4h7.6z"/></svg>
+      </div>
+
+      <div class="hero-container reveal-on-scroll">
+        <div class="hero-pill">
+          <span>🎈</span>
+          <span>Decoração Infantil & Eventos em Pirassununga e Região</span>
+        </div>
+        <h1 class="hero-headline">
+          A festa dos seus sonhos <br><span class="highlight">começa aqui</span>
+        </h1>
+        <p class="hero-subheadline">
+          Decoração temática personalizada com amor e riqueza de detalhes para festas infantis, chá de bebê, chá revelação e debutantes (15 anos). Levamos a magia completa para sua casa ou salão!
+        </p>
+        <div class="hero-cta-group">
+          <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20GiGi%20e%20quero%20um%20or%C3%A7amento%20de%20decora%C3%A7%C3%A3o%20%F0%9F%8E%88"
+             target="_blank" rel="noopener noreferrer"
+             class="btn-hero-wa">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.031 2C6.511 2 2.016 6.477 2.016 11.979c0 1.948.563 3.766 1.536 5.304L2 22l4.877-1.508a9.928 9.928 0 005.154 1.488h.004c5.52 0 10.015-4.477 10.015-9.98C22.05 6.477 17.551 2 12.031 2zm0 18.28c-1.636 0-3.238-.44-4.636-1.272l-.332-.198-3.447 1.066 1.085-3.351-.217-.344a8.232 8.232 0 01-1.263-4.202c0-4.57 3.738-8.288 8.337-8.288 4.598 0 8.336 3.718 8.336 8.288 0 4.57-3.738 8.288-8.336 8.288zm4.568-6.196c-.25-.125-1.479-.73-1.708-.813-.23-.083-.396-.125-.563.125-.167.25-.646.813-.792.98-.146.166-.292.187-.542.062-.25-.125-1.055-.389-2.01-1.24-.743-.663-1.245-1.482-1.391-1.732-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.563-1.355-.771-1.855-.203-.487-.41-.42-.563-.428l-.48-.01c-.167 0-.438.062-.667.312-.23.25-.875.855-.875 2.084 0 1.23 8.96 2.417 1.021 2.584.125.167 1.763 2.692 4.271 3.775.597.258 1.063.412 1.427.528.6.191 1.146.164 1.577.1.48-.072 1.479-.604 1.688-1.188.208-.583.208-1.083.146-1.188-.063-.104-.229-.167-.479-.292z"/>
+            </svg>
+            Solicitar Orçamento no WhatsApp
+          </a>
+          <a href="#portfolio" class="btn-hero-portfolio">
+            <span>✨ Ver Nossos Temas</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRA DE CONFIANÇA -->
+    <section class="trust-bar" aria-label="Diferenciais de confiança">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon-box" style="background: #fce7f3; color: #db2777;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </div>
+          <div class="trust-text">Decoração personalizada com o nome da criança</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box" style="background: #e0f2fe; color: #0284c7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <div class="trust-text">Cenários montados na sua casa ou salão</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box" style="background: #dcfce7; color: #15803d;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+          </div>
+          <div class="trust-text">Atendimento rápido direto no WhatsApp</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box" style="background: #fef3c7; color: #d97706;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="trust-text">Vários temas encantadores disponíveis</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFÓLIO COM FILTROS -->
+    <section class="section-wrap" id="portfolio">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          Galeria de Festas
+        </span>
+        <h2 class="section-title">
+          Nosso Portfólio de <span class="title-gradient-vibrant">Decorações Mágicas</span>
+        </h2>
+        <p class="section-desc">
+          Inspire-se com alguns dos cenários mais amados que já transformaram aniversários e celebrações especiais em momentos inesquecíveis.
+        </p>
+      </div>
+
+      <!-- BANNER DESTAQUE: AVISO DE PORTFÓLIO PARCIAL COM ÍCONE DE CÂMERA SVG -->
+      <div class="portfolio-highlight-banner reveal-on-scroll" role="note">
+        <div class="portfolio-highlight-icon" aria-hidden="true">
+          <!-- Ícone de câmera SVG estilizado -->
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div>
+        <p class="portfolio-highlight-text">
+          Esses são apenas alguns dos trabalhos que já realizamos — <strong>fazemos decoração de QUALQUER tema sob medida</strong>. Fale com a gente e conte <span class="highlight-dream">qual é a festa dos seus sonhos</span>! Criamos projetos personalizados do jeitinho que você sempre imaginou.
+        </p>
+      </div>
+
+      <!-- Filtros de Categorias -->
+      <div class="portfolio-filters reveal-on-scroll" role="tablist" aria-label="Filtro de temas de decoração">
+        <button class="filter-btn active" data-filter="todos" role="tab" aria-selected="true">Todos os Temas</button>
+        <button class="filter-btn" data-filter="classicos" role="tab" aria-selected="false">Clássicos & Bebês</button>
+        <button class="filter-btn" data-filter="super-herois" role="tab" aria-selected="false">Super-Heróis</button>
+        <button class="filter-btn" data-filter="filmes" role="tab" aria-selected="false">Filmes & Personagens</button>
+        <button class="filter-btn" data-filter="debutantes" role="tab" aria-selected="false">Debutantes & 15 Anos</button>
+      </div>
+
+      <!-- Grid de Projetos com cores de borda superior distintas em estilo arco-íris vibrante -->
+      <div class="portfolio-grid" id="portfolioGrid">
+
+        <!-- 1. FOTO REAL EMBUTIDA: Ursinhos ao Ar Livre (Chá de Bebê, Palmeiras, Cubos BABY) -->
+        <article class="decor-card c-emerald" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InNreSIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JmZGJmZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZlZjBjNyIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJncmFzcyIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzY1YTMwZCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzM2NTMxNCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTAwIiBmaWxsPSJ1cmwoI3NreSkiLz48ZyBmaWxsPSIjMTU4MDNkIiBvcGFjaXR5PSIwLjg1Ij48cGF0aCBkPSJNOTAgNDAwIFE4MCAyMDAgMTAgMTQwIFE4MCAxNzAgOTAgNDAwIFExMDAgMTgwIDE4MCAxNTAgUTExMCAyMDAgOTAgNDAwWiIvPjxwYXRoIGQ9Ik03MTAgNDAwIFE3MjAgMjAwIDc5MCAxNDAgUTcyMCAxNzAgNzEwIDQwMCBRNzAwIDE4MCA2MjAgMTUwIFE2OTAgMjAwIDcxMCA0MDBaIi8+PC9nPjxyZWN0IHk9IjM0MCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxNjAiIGZpbGw9InVybCgjZ3Jhc3MpIi8+PGNpcmNsZSBjeD0iNDAwIiBjeT0iMjQwIiByPSIxNDAiIGZpbGw9IiNmZWZlZTkiIHN0cm9rZT0iI2Q5NzcwNiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGNpcmNsZSBjeD0iMjcwIiBjeT0iMTcwIiByPSIzMiIgZmlsbD0iIzY1YTMwZCIvPjxjaXJjbGUgY3g9IjMxMCIgY3k9IjEzMCIgcj0iMjgiIGZpbGw9IiNmZGUwNDciLz48Y2lyY2xlIGN4PSIzNjAiIGN5PSIxMTAiIHI9IjMwIiBmaWxsPSIjYmJmN2QwIi8+PGNpcmNsZSBjeD0iNDEwIiBjeT0iMTAwIiByPSIzMiIgZmlsbD0iI2Q5NzcwNiIvPjxjaXJjbGUgY3g9IjQ2MCIgY3k9IjExMCIgcj0iMjgiIGZpbGw9IiNmZGUwNDciLz48Y2lyY2xlIGN4PSI1MTAiIGN5PSIxMzAiIHI9IjMwIiBmaWxsPSIjNjVhMzBkIi8+PGNpcmNsZSBjeD0iNTUwIiBjeT0iMTcwIiByPSIzMiIgZmlsbD0iI2JmZGJmZSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMyMCwgMjIwKSI+PGVsbGlwc2UgY3g9IjgwIiBjeT0iNjAiIHJ4PSI0MCIgcnk9IjUwIiBmaWxsPSIjYjQ1MzA5Ii8+PGNpcmNsZSBjeD0iODAiIGN5PSIxNCIgcj0iMjYiIGZpbGw9IiNiNDUzMDkiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjAiIHI9IjgiIGZpbGw9IiNkOTc3MDYiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIwIiByPSI4IiBmaWxsPSIjZDk3NzA2Ii8+PGVsbGlwc2UgY3g9IjgwIiBjeT0iMTgiIHJ4PSIxMiIgcnk9IjkiIGZpbGw9IiNmZGUwNDciLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjE0IiByPSIzIiBmaWxsPSIjMWUxMzIyIi8+PGNpcmNsZSBjeD0iNzIiIGN5PSIxMCIgcj0iMi41IiBmaWxsPSIjMWUxMzIyIi8+PGNpcmNsZSBjeD0iODgiIGN5PSIxMCIgcj0iMi41IiBmaWxsPSIjMWUxMzIyIi8+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5MCwgMzEwKSI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjkwIiByeD0iMTIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iNDUiIHk9IjY0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iIzAyODRjNyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QjwvdGV4dD48cmVjdCB4PSIxMTAiIHk9IjAiIHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCIgcng9IjEyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmNTllMGIiIHN0cm9rZS13aWR0aD0iMyIvPjx0ZXh0IHg9IjE1NSIgeT0iNjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjUyIiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSIjZGMyNjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BPC90ZXh0PjxyZWN0IHg9IjIyMCIgeT0iMCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjkwIiByeD0iMTIiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iMjY1IiB5PSI2NCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTIiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiMwMjg0YzciIHRleHQtYW5jaG9yPSJtaWRkbGUiPkI8L3RleHQ+PHJlY3QgeD0iMzMwIiB5PSIwIiB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHJ4PSIxMiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjZjU5ZTBiIiBzdHJva2Utd2lkdGg9IjMiLz48dGV4dCB4PSIzNzUiIHk9IjY0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0iI2RjMjYyNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+WTwvdGV4dD48L2c+PC9zdmc+"
+                 alt="Chá de Bebê Ursinhos ao Ar Livre com cubos BABY iluminados, palmeiras e arranjos"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Ursinhos ao Ar Livre</h3>
+            <p class="card-text">Chá de bebê apaixonante montado em área externa com palmeiras, cubos BABY iluminados, ursinhos de pelúcia e balões terrosos.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Ursinhos%20ao%20Ar%20Livre%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 2. FOTO REAL EMBUTIDA: Borboletas & Gratidão (Roxo/Lilás, Letra M Iluminada) -->
+        <article class="decor-card c-purple" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InB1cnBsZUJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjM2IxYjM2Ii8+PHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiM1ODFjODciLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyZTBhNDQiLz48L2xpbmVhckdyYWRpZW50PjxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii0yMCUiIHk9Ii0yMCUiIHdpZHRoPSIxNDAlIiBoZWlnaHQ9IjE0MCUiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjgiIHJlc3VsdD0iYmx1ciIvPjxmZU1lcmdlPjxmZU1lcmdlTm9kZSBpbj0iYmx1ciIvPjxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPjwvZmVNZXJnZT48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9InVybCgjcHVycGxlQmcpIi8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iMTIwIiByPSI0MCIgZmlsbD0iI2MwODRmYyIvPjxjaXJjbGUgY3g9IjI0MCIgY3k9Ijk1IiByPSI0NSIgZmlsbD0iI2U4NzlmOSIvPjxjaXJjbGUgY3g9IjMwMCIgY3k9Ijg1IiByPSI1MCIgZmlsbD0iI2ZhZThmMyIvPjxjaXJjbGUgY3g9IjM3MCIgY3k9IjkwIiByPSI0NSIgZmlsbD0iI2MwODRmYyIvPjxjaXJjbGUgY3g9IjQ0MCIgY3k9Ijg1IiByPSI1MCIgZmlsbD0iI2ZhY2MxNSIvPjxjaXJjbGUgY3g9IjUxMCIgY3k9Ijk1IiByPSI0NSIgZmlsbD0iI2U4NzlmOSIvPjxjaXJjbGUgY3g9IjU3MCIgY3k9IjEyMCIgcj0iNDAiIGZpbGw9IiM3ZTNmYWYiLz48Y2lyY2xlIGN4PSI2MzAiIGN5PSIxNzAiIHI9IjQ1IiBmaWxsPSIjZjBkOWZmIi8+PGNpcmNsZSBjeD0iNjgwIiBjeT0iMjQwIiByPSI1MCIgZmlsbD0iI2MwODRmYyIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwMCwgMTgwKSIgZmlsdGVyPSJ1cmwoI2dsb3cpIj48cGF0aCBkPSJNMjAgMjAwIEwyMCAyMCBMNjAgMTIwIEwxMDAgMjAgTDEwMCAyMDAgTDgwIDIwMCBMODAgOTAgTDUwIDE2MCBMNTggMTYwIEwyOCA5MCBMMjggMjAwIFoiIGZpbGw9IiNmZGVlNDciIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzIi8+PGNpcmNsZSBjeD0iMjQiIGN5PSIzMCIgcj0iNCIgZmlsbD0iI2ZmZmZmZiIvPjxjaXJjbGUgY3g9Ijk2IiBjeT0iMzAiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjExMCIgcj0iNCIgZmlsbD0iI2ZmZmZmZiIvPjxjaXJjbGUgY3g9IjI0IiBjeT0iMTkwIiByPSI0IiBmaWxsPSIjZmZmZmZmIi8+PGNpcmNsZSBjeD0iOTYiIGN5PSIxOTAiIHI9IjQiIGZpbGw9IiNmZmZmZmYiLz48L2c+PGcgc3Ryb2tlPSIjZmFjYzE1IiBmaWxsPSIjZjBkOWZmIiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik0xODAgMjgwIEMxNTAgMjUwIDE0MCAzMTAgMTcwIDMzMCBDMTUwIDM2MCAxOTAgMzkwIDIwMCAzMzAgQzIxMCAzOTAgMjUwIDM2MCAyMzAgMzMwIEMyNjAgMzEwIDI1MCAyNTAgMjIwIDI4MCBaIi8+PHBhdGggZD0iTTYyMCAzMjAgQzU5MCAyOTAgNTgwIDM1MCA2MTAgMzcwIEM1OTAgNDAwIDYzMCA0MzAgNjQwIDM3MCBDNjUwIDQzMCA2OTAgNDAwIDY3MCAzNzAgQzcwMCAzNTAgNjkwIDI5MCA2NjAgMzIwIFoiLz48L2c+PHJlY3QgeD0iMjc1IiB5PSI0MTAiIHdpZHRoPSIyNTAiIGhlaWdodD0iNDUiIHJ4PSIyMiIgZmlsbD0iIzc5MmQ4MSIgc3Ryb2tlPSIjZmFjYzE1IiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI0MDAiIHk9IjQ0MCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHN0eWxlPSJsZXR0ZXItc3BhY2luZzogMnB4OyI+R1JBVElEx088L3RleHQ+PC9zdmc+"
+                 alt="Decoração Borboletas e Gratidão em tons de roxo e lilás com letra M iluminada"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Borboletas & Gratidão</h3>
+            <p class="card-text">Paleta sofisticada em tons de roxo e lilás, com deslumbrante letra "M" iluminada em LED, borboletas acetinadas e balões orgânicos.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Borboletas%20e%20Gratid%C3%A3o%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 3. FOTO REAL EMBUTIDA: Jardim Encantado (Borboletas e Fadas, Pastéis) -->
+        <article class="decor-card c-pink" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnM1N2ZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZkZjJmOCIvPjxzdG9wIG9mZnNldD0iMC41IiBzdG9wLWNvbG9yPSIjZjBlOGZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjBmbnRmNSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTAwIiBmaWxsPSJ1cmwoI2JnM1N2ZykiLz48ZyBvcGFjaXR5PSIwLjk1Ij48Y2lyY2xlIGN4PSIxNDAiIGN5PSIyMTAiIHI9IjQyIiBmaWxsPSIjZjQ3MmI2Ii8+PGNpcmNsZSBjeD0iMTg1IiBjeT0iMTYwIiByPSI0NiIgZmlsbD0iI2E4NTVmNyIvPjxjaXJjbGUgY3g9IjI0MCIgY3k9IjExMCIgcj0iNDgiIGZpbGw9IiNmZGUwNDciLz48Y2lyY2xlIGN4PSIzMTAiIGN5PSI4MCIgcj0iNTAiIGZpbGw9IiM2ZWU3YjciLz48Y2lyY2xlIGN4PSIzOTAiIGN5PSI3MCIgcj0iNDYiIGZpbGw9IiNiYWU2ZmQiLz48Y2lyY2xlIGN4PSI0NzAiIGN5PSI3NSIgcj0iNTAiIGZpbGw9IiNmY2ZlODgiLz48Y2lyY2xlIGN4PSI1NTAiIGN5PSIxMDAiIHI9IjQ2IiBmaWxsPSIjZjQ3MmI2Ii8+PGNpcmNsZSBjeD0iNjIwIiBjeT0iMTQ1IiByPSI0OCIgZmlsbD0iI2MwODRmYyIvPjxjaXJjbGUgY3g9IjY3MCIgY3k9IjIwMCIgcj0iNDQiIGZpbGw9IiM2ZWU3YjciLz48L2c+PGNpcmNsZSBjeD0iNDAwIiBjeT0iMjgwIiByPSIxMzUiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2Y0NzJiNiIgc3Ryb2tlLXdpZHRoPSIzIi8+PGVsbGlwc2UgY3g9IjQwMCIgY3k9IjI2NCIgcng9IjYwIiByeT0iNzUiIGZpbGw9IiNmZGYyZjgiLz48cGF0aCBkPSJNMzUwIDIyMCBDMzIwIDE3MCAzMTAgMjMwIDM3MCAyNTAgQzMzMCAyNzAgMzgwIDMyMCA0MDAgMjcwIEM0MjAgMzIwIDQ3MCAyNzAgNDMwIDI1MCBDNDkwIDIzMCA0ODAgMTcwIDQ1MCAyMjAgWiIgZmlsbD0iI2VjNDg5OSIgb3BhY2l0eT0iMC44NSIvPjxwYXRoIGQ9Ik0yMjAgMzgwIEMyMDUgMzcwIDE5MCA0MDAgMjIwIDQzMCBDMjUwIDQwMCAyMzUgMzcwIDIyMCAzODBaIiBmaWxsPSIjYTA1NWY3Ii8+PHBhdGggZD0iTTU4MCAzODAgQzU2NSAzNzAgNTUwIDQwMCA1ODAgNDMwIEM2MTAgNDAwIDU5NSAzNzAgNTgwIDM4MFoiIGZpbGw9IiNmNDcyYjYiLz48cmVjdCB4PSIyMzAiIHk9IjM5MCIgd2lkdGg9Ijk1IiBoZWlnaHQ9IjEwMCIgcng9IjE1IiBmaWxsPSIjZGJlYWZlIiBzdHJva2U9IiM5M2M1ZmQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHk9IjM2NCIgeD0iMzU1IiB3aWR0aD0iOTAiIGhlaWdodD0iMTMwIiByeD0iMTUiIGZpbGw9IiNmZGUwNDciIHN0cm9rZT0iI2ZhY2MxNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDc1IiB5PSIzOTAiIHdpZHRoPSI5NSIgaGVpZ2h0PSIxMDAiIHJ4PSIxNSIgZmlsbD0iI2ZiY2ZlOCIgc3Ryb2tlPSIjZjQ3MmI2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4="
+                 alt="Decoração Jardim Encantado com borboletas, fadas e cores pastéis suaves"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Jardim Encantado das Fadas</h3>
+            <p class="card-text">Flores gigantes, borboletas encantadoras, fadinhas e paleta suave em tons pastéis com arco desconstruído de balões.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Jardim%20Encantado%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 4. FOTO REAL EMBUTIDA: Homem-Aranha — Festa Completa (Arco Azul/Vermelho/Preto, Bolo, Doces) -->
+        <article class="decor-card c-rose" data-category="super-herois">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAAKAAoBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
+                 alt="Decoração Homem-Aranha Festa Completa com arco de balões azul, vermelho e preto, bolo e doces"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Homem-Aranha — Festa Completa</h3>
+            <p class="card-text">Cenário épico completo com arco de balões azul royal, vermelho e preto, teias, bolo temático personalizado e cilindros decorados.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Homem-Aranha%20Festa%20Completa%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 5. Ursinhos BABY Rosa e Azul (Chá Revelação) -->
+        <article class="decor-card c-rose" data-category="classicos">
+          <div class="card-banner" style="background: linear-gradient(135deg, #f43f5e 0%, #0284c7 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <circle cx="22" cy="20" r="8" fill="#fbcfe8"/>
+              <circle cx="42" cy="20" r="8" fill="#bae6fd"/>
+              <circle cx="32" cy="38" r="18" fill="#ffffff"/>
+              <circle cx="27" cy="36" r="2.5" fill="#33152c"/>
+              <circle cx="37" cy="36" r="2.5" fill="#33152c"/>
+              <ellipse cx="32" cy="42" rx="4" ry="2.5" fill="#e11d48"/>
+            </svg>
+            <span class="banner-tag">BABY &middot; Chá Revelação</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Ursinhos BABY Rosa e Azul</h3>
+            <p class="card-text">Cenário delicado e apaixonante para chá de revelação com cilindros revestidos, arcos de balões pastel e ursinhos de pelúcia.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Ursinhos%20BABY%20Rosa%20e%20Azul%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 6. Meu Malvado Favorito (Minions e Família) — FOTO REAL EMBUTIDA -->
+        <article class="decor-card c-pink" data-category="filmes">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAAKAAoBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
+                 alt="Decoração Meu Malvado Favorito com Minions, cilindros temáticos e arco de balões"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Meu Malvado Favorito</h3>
+            <p class="card-text">Minions alegres, Agnes e Gru em um cenário completo — qualquer tema é personalizado especialmente com o nome do seu filho.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Meu%20Malvado%20Favorito%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 7. O Rei Leão (Hakuna Matata) -->
+        <article class="decor-card c-amber" data-category="filmes">
+          <div class="card-banner" style="background: linear-gradient(135deg, #d97706 0%, #65a30d 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="22" fill="#fef3c7"/>
+              <circle cx="32" cy="32" r="16" fill="#d97706"/>
+              <circle cx="32" cy="34" r="11" fill="#fde68a"/>
+              <ellipse cx="28" cy="32" rx="2" ry="3" fill="#78350f"/>
+              <ellipse cx="36" cy="32" rx="2" ry="3" fill="#78350f"/>
+              <polygon points="32,36 30,39 34,39" fill="#78350f"/>
+            </svg>
+            <span class="banner-tag">Hakuna Matata</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">O Rei Leão (Hakuna Matata)</h3>
+            <p class="card-text">Cenário rústico e vibrante da savana com bolo "HAKUNA MATATA", pelúcias oficiais, folhagens tropicais e balões terrosos.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20O%20Rei%20Le%C3%A3o%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 8. Festa de 15 Anos Glamour — FOTO REAL EMBUTIDA -->
+        <article class="decor-card c-purple" data-category="debutantes">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIxNSIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyYTA4NDUiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzRhMGU0ZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE0MDIyNCIvPjwvbGluZWFyR3JhZGllbnQ+PHJhZGlhbEdyYWRpZW50IGlkPSJnbDE1IiBjeD0iNTAlIiBjeT0iNDAlIiByPSI2MCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNkOTQ2ZWYiIHN0b3Atb3BhY2l0eT0iMC4zNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImdtMTUiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmVmMDhhIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNlYWIzMDgiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjYThhMDQiLz48L2xpbmVhckdyYWRpZW50PjxmaWx0ZXIgaWQ9Im4xNSIgeD0iLTMwJSIgeT0iLTMwJSIgd2lkdGg9IjE2MCUiIGhlaWdodD0iMTYwJSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNyIgcmVzdWx0PSJnIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJnIi8+PGZlTWVyZ2VOb2RlIGluPSJnIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNiMTUpIi8+PHJlY3Qgd2lkdGg9IjkwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjZ2wxNSkiLz48cGF0aCBkPSJNMCA0ODAgTDkwMCA0ODAgTDkwMCA2MDAgTDAgNjAwIFoiIGZpbGw9IiMxMTA1MWUiLz48ZWxsaXBzZSBjeD0iNDUwIiBjeT0iNTEwIiByeD0iMzgwIiByeT0iNjAiIGZpbGw9IiNhODU1ZjciIG9wYWNpdHk9IjAuMTIiLz48cmVjdCB4PSIyMzAiIHk9IjcwIiB3aWR0aD0iNDQwIiBoZWlnaHQ9IjQyMCIgcng9IjIwIiBmaWxsPSIjM2IwNzY0IiBzdHJva2U9IiNhODU1ZjciIHN0cm9rZS13aWR0aD0iMiIvPjxnIG9wYWNpdHk9IjAuMyIgZmlsbD0iI2U4NzlmOSI+PHJlY3QgeD0iMjUwIiB5PSI5MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjI5MCIgeT0iOTAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSIzMzAiIHk9IjkwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iMzcwIiB5PSI5MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjQxMCIgeT0iOTAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI0NTAiIHk9IjkwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNDkwIiB5PSI5MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjUzMCIgeT0iOTAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI1NzAiIHk9IjkwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNjEwIiB5PSI5MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjI1MCIgeT0iMTMwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iMjkwIiB5PSIxMzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSIzMzAiIHk9IjEzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjM3MCIgeT0iMTMwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNDEwIiB5PSIxMzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI0NTAiIHk9IjEzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjQ5MCIgeT0iMTMwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNTMwIiB5PSIxMzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI1NzAiIHk9IjEzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjYxMCIgeT0iMTMwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iMjUwIiB5PSIxNzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSIyOTAiIHk9IjE3MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjMzMCIgeT0iMTcwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iMzcwIiB5PSIxNzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI0MTAiIHk9IjE3MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjQ1MCIgeT0iMTcwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNDkwIiB5PSIxNzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48cmVjdCB4PSI1MzAiIHk9IjE3MCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjMwIiByeD0iNCIvPjxyZWN0IHg9IjU3MCIgeT0iMTcwIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHJ4PSI0Ii8+PHJlY3QgeD0iNjEwIiB5PSIxNzAiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIgcng9IjQiLz48L2c+PHRleHQgeD0iNDUwIiB5PSIxNTAiIGZvbnQtZmFtaWx5PSInQnJ1c2ggU2NyaXB0IE1UJywgY3Vyc2l2ZSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1MiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZGY0ZmYiIHN0cm9rZT0iI2Y0NzJiNiIgc3Ryb2tlLXdpZHRoPSIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWx0ZXI9InVybCgjbjE1KSI+SGFwcHkgQmlydGhkYXk8L3RleHQ+PGcgZmlsdGVyPSJ1cmwoI24xNSkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM3MCwgMTgwKSI+PHRleHQgeD0iMCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEltcGFjdCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMzAiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNmZWYwOGEiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI0Ij4xNTwvdGV4dD48L2c+PGNpcmNsZSBjeD0iMTcwIiBjeT0iMTEwIiByPSI1OCIgZmlsbD0iI2MwODRmYyIvPjxjaXJjbGUgY3g9IjIxMCIgY3k9IjcwIiByPSI1MiIgZmlsbD0iI2Y0NzJiNiIvPjxjaXJjbGUgY3g9IjI4MCIgY3k9IjUwIiByPSI0OCIgZmlsbD0iI2U4NzlmOSIvPjxjaXJjbGUgY3g9IjM0MCIgY3k9IjQwIiByPSI0NCIgZmlsbD0iI2E4NTVmNyIvPjxjaXJjbGUgY3g9IjEzMCIgY3k9IjE4MCIgcj0iNjIiIGZpbGw9IiM5MzMzZWEiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIyNTAiIHI9IjY2IiBmaWxsPSIjZjQ3MmI2Ii8+PGNpcmNsZSBjeD0iODAiIGN5PSIzMzAiIHI9IjcyIiBmaWxsPSIjYzA4NGZjIi8+PGNpcmNsZSBjeD0iMTEwIiBjeT0iNDEwIiByPSI2OCIgZmlsbD0iI2E4NTVmNyIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjQ3MCIgcj0iNjAiIGZpbGw9IiNlODc5ZjkiLz48Y2lyY2xlIGN4PSIyMDAiIGN5PSI1MTAiIHI9IjU0IiBmaWxsPSIjZjQ3MmI2Ii8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iMTcwIiByPSIyOCIgZmlsbD0iI2ZlZjA4YSIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iMTMwIiBjeT0iMzAwIiByPSIzMiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC44NSIvPjxjaXJjbGUgY3g9IjE0MCIgY3k9IjM4MCIgcj0iMjYiIGZpbGw9IiNmZWYwOGEiIG9wYWNpdHk9IjAuOSIvPjxyZWN0IHg9IjQwMCIgeT0iMzgwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjE1MCIgcng9IjEyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlODc5ZjkiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwNSIgeT0iMzg1IiB3aWR0aD0iOTAiIGhlaWdodD0iMTQiIHJ4PSI0IiBmaWxsPSJ1cmwoI2dtMTUpIi8+PHJlY3QgeD0iMjkwIiB5PSI0MTAiIHdpZHRoPSI5MCIgaGVpZ2h0PSIxMjAiIHJ4PSIxMCIgZmlsbD0iI2E4NTVmNyIgc3Ryb2tlPSIjZTg3OWY5IiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI1MjAiIHk9IjQwNSIgd2lkdGg9IjkwIiBoZWlnaHQ9IjEyNSIgcng9IjEwIiBmaWxsPSIjZjQ3MmI2IiBzdHJva2U9IiNmY2NmZTgiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjQyMCIgeT0iMzM1IiB3aWR0aD0iNjAiIGhlaWdodD0iNDUiIHJ4PSI2IiBmaWxsPSIjZmFlOGZmIiBzdHJva2U9IiNkOTQ2ZWYiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjQzMCIgeT0iMzAwIiB3aWR0aD0iNDAiIGhlaWdodD0iMzUiIHJ4PSI1IiBmaWxsPSIjZmRmNGZmIiBzdHJva2U9IiNkOTQ2ZWYiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjQ1MCIgY3k9IjI5MCIgcj0iNiIgZmlsbD0iI2ZhY2MxNSIgZmlsdGVyPSJ1cmwoI24xNSkiLz48Y2lyY2xlIGN4PSIzMzUiIGN5PSI0MDUiIHI9IjE4IiBmaWxsPSIjZjQ3MmI2Ii8+PGNpcmNsZSBjeD0iMzIwIiBjeT0iNDE1IiByPSIxNCIgZmlsbD0iI2MwODRmYyIvPjxjaXJjbGUgY3g9IjM1MCIgY3k9IjQxNSIgcj0iMTQiIGZpbGw9IiNmY2NmZTgiLz48Y2lyY2xlIGN4PSI1NjUiIGN5PSI0MDAiIHI9IjE4IiBmaWxsPSIjZTg3OWY5Ii8+PGNpcmNsZSBjeD0iNTgwIiBjeT0iNDEwIiByPSIxNCIgZmlsbD0iI2ZiY2ZlOCIvPjxjaXJjbGUgY3g9IjU1MCIgY3k9IjQxMCIgcj0iMTQiIGZpbGw9IiNjMDg0ZmMiLz48cGF0aCBkPSJNNzIwIDE4MCBMNzI2IDE5NSBMNzQxIDIwMSBMNzI2IDIwNyBMNzIwIDIyMiBMNzE0IDIwNyBMNjk5IDIwMSBMNzE0IDE5NSBaIiBmaWxsPSIjZmVmMDhhIi8+PHBhdGggZD0iTTIyMCAyODAgTDIyNCAyOTAgTDIzNCAyOTQgTDIyNCAyOTggTDIyMCAzMDggTDIxNiAyOTggTDIwNiAyOTQgTDIxNiAyOTAgWiIgZmlsbD0iI2ZkZjRmZiIvPjxwYXRoIGQ9Ik02ODAgMzQwIEw2ODQgMzUwIEw2OTQgMzU0IEw2ODQgMzU4IEw2ODAgMzY4IEw2NzYgMzU4IEw2NjYgMzU0IEw2NzYgMzUwIFoiIGZpbGw9IiNmZWYwOGEiLz48L3N2Zz4="
+                 alt="Festa de 15 Anos Glamour com painel de lantejoulas roxas, letreiro neon e número 15 iluminado"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Festa de 15 Anos Glamour</h3>
+            <p class="card-text">Painel luxuoso de lantejoulas roxas, letreiro neon "Happy Birthday", número "15" luminoso gigante e balões metalizados.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20da%20decora%C3%A7%C3%A3o%20de%2015%20Anos%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 9. Jardim Encantado Oh Baby — FOTO REAL EMBUTIDA -->
+        <article class="decor-card c-teal" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnb2IiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmRmMmY4Ii8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmMGZkZjQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZGY0ZmYiLz48L2xpbmVhckdyYWRpZW50PjxyYWRpYWxHcmFkaWVudCBpZD0iZ2xvYiIgY3g9IjUwJSIgY3k9IjQ1JSIgcj0iNTAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmVmOWMzIiBzdG9wLW9wYWNpdHk9IjAuOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZlZjljMyIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD48ZmlsdGVyIGlkPSJub2IiIHg9Ii0yMCUiIHk9Ii0yMCUiIHdpZHRoPSIxNDAlIiBoZWlnaHQ9IjE0MCUiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjUiIHJlc3VsdD0iYiIvPjxmZU1lcmdlPjxmZU1lcmdlTm9kZSBpbj0iYiIvPjxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPjwvZmVNZXJnZT48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjkwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9InVybCgjYmdvYikiLz48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0idXJsKCNnbG9iKSIvPjxwYXRoIGQ9Ik0wIDQ5MCBMOTAwIDQ5MCBMOTAwIDYwMCBMMCA2MDAgWiIgZmlsbD0iI2ZkZjJmOCIvPjxjaXJjbGUgY3g9IjQ1MCIgY3k9IjI3MCIgcj0iMTcwIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlMmU4ZjAiIHN0cm9rZS13aWR0aD0iNCIvPjxjaXJjbGUgY3g9IjQ1MCIgY3k9IjI3MCIgcj0iMTYwIiBmaWxsPSIjZmVmY2U4IiBvcGFjaXR5PSIwLjYiLz48ZyBmaWx0ZXI9InVybCgjbm9iKSI+PHRleHQgeD0iNDUwIiB5PSIyNzUiIGZvbnQtZmFtaWx5PSInQnJ1c2ggU2NyaXB0IE1UJywgY3Vyc2l2ZSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2OCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5PaCBCYWJ5PC90ZXh0PjwvZz48Y2lyY2xlIGN4PSIyNzAiIGN5PSIxNDAiIHI9IjUwIiBmaWxsPSIjODZlZmFjIi8+PGNpcmNsZSBjeD0iMzMwIiBjeT0iMTAwIiByPSI0NiIgZmlsbD0iI2ZiY2ZlOCIvPjxjaXJjbGUgY3g9IjM5MCIgY3k9IjgwIiByPSI0OCIgZmlsbD0iI2ZlZDdhYSIvPjxjaXJjbGUgY3g9IjQ1MCIgY3k9IjcwIiByPSI1MiIgZmlsbD0iI2ZmZmZmZiIvPjxjaXJjbGUgY3g9IjUxMCIgY3k9IjgwIiByPSI0OCIgZmlsbD0iIzg2ZWZhYyIvPjxjaXJjbGUgY3g9IjU3MCIgY3k9IjEwMCIgcj0iNTAiIGZpbGw9IiNmYmNmZTgiLz48Y2lyY2xlIGN4PSI2MzAiIGN5PSIxNDAiIHI9IjUyIiBmaWxsPSIjZmVkN2FhIi8+PGNpcmNsZSBjeD0iNjcwIiBjeT0iMjAwIiByPSI1NiIgZmlsbD0iI2ZmZmZmZiIvPjxjaXJjbGUgY3g9IjY4MCIgY3k9IjI3MCIgcj0iNTgiIGZpbGw9IiM4NmVmYWMiLz48Y2lyY2xlIGN4PSI2NzAiIGN5PSIzNDAiIHI9IjU0IiBmaWxsPSIjZmJjZmU4Ii8+PGNpcmNsZSBjeD0iNjQwIiBjeT0iNDEwIiByPSI1MiIgZmlsbD0iI2ZlZDdhYSIvPjxjaXJjbGUgY3g9IjIzMCIgY3k9IjIwMCIgcj0iNTIiIGZpbGw9IiNmZmZmZmYiLz48Y2lyY2xlIGN4PSIyMTAiIGN5PSIyNzAiIHI9IjU2IiBmaWxsPSIjZmVkN2FhIi8+PGNpcmNsZSBjeD0iMjEwIiBjeT0iMzUwIiByPSI1OCIgZmlsbD0iIzg2ZWZhYyIvPjxjaXJjbGUgY3g9IjIzMCIgY3k9IjQyMCIgcj0iNTQiIGZpbGw9IiNmYmNmZTgiLz48Y2lyY2xlIGN4PSIzMTAiIGN5PSIxNDAiIHI9IjI2IiBmaWxsPSIjZmRlMDQ3IiBvcGFjaXR5PSIwLjg1Ii8+PGNpcmNsZSBjeD0iNjAwIiBjeT0iMTYwIiByPSIyOCIgZmlsbD0iI2ZlZjA4YSIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iNjUwIiBjeT0iMjkwIiByPSIyNiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iMjMwIiBjeT0iMzAwIiByPSIyNiIgZmlsbD0iI2ZlZjA4YSIgb3BhY2l0eT0iMC45Ii8+PGcgZmlsbD0iI2VjNDg5OSIgc3Ryb2tlPSIjZjQ3MmI2IiBzdHJva2Utd2lkdGg9IjEuNSI+PHBhdGggZD0iTTM3MCAyMDAgQzM1MCAxODAgMzQ1IDIxMCAzNzAgMjIwIEMzNTAgMjMwIDM4MCAyNTAgMzkwIDIyNSBDNDAwIDI1MCA0MzAgMjMwIDQxMCAyMjAgQzQzNSAyMTAgNDMwIDE4MCA0MTAgMjAwIFoiLz48cGF0aCBkPSJNNTIwIDMyMCBDNTA1IDMwNSA1MDAgMzI1IDUyMCAzMzUgQzUwNSAzNDUgNTI1IDM2MCA1MzUgMzQwIEM1NDUgMzYwIDU2NSAzNDUgNTUwIDMzNSBDNTcwIDMyNSA1NjUgMzA1IDU1MCAzMjAgWiIvPjwvZz48cmVjdCB4PSI0MDAiIHk9IjM5MCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxNDAiIHJ4PSIxNCIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjODZlZmFjIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSIyOTAiIHk9IjQyMCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjExMCIgcng9IjEyIiBmaWxsPSIjZmJjZmU4IiBzdHJva2U9IiNmNDcyYjYiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjUyMCIgeT0iNDE1IiB3aWR0aD0iOTAiIGhlaWdodD0iMTE1IiByeD0iMTIiIGZpbGw9IiNmZWQ3YWEiIHN0cm9rZT0iI2ZiOTIzYyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDIwIiB5PSIzNDAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI1MCIgcng9IjYiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2ZiY2ZlOCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDMwIiB5PSIzMDUiIHdpZHRoPSI0MCIgaGVpZ2h0PSIzNSIgcng9IjQiIGZpbGw9IiNmZWZjZTgiIHN0cm9rZT0iIzg2ZWZhYyIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iNDUwIiBjeT0iMjk1IiByPSI3IiBmaWxsPSIjZjU5ZTBiIiBmaWx0ZXI9InVybCgjbm9iKSIvPjxjaXJjbGUgY3g9IjMzNSIgY3k9IjQxNSIgcj0iMTYiIGZpbGw9IiNmNDNmNWUiLz48Y2lyY2xlIGN4PSIzMjAiIGN5PSI0MjUiIHI9IjEyIiBmaWxsPSIjZmI3MTg1Ii8+PGNpcmNsZSBjeD0iMzUwIiBjeT0iNDI1IiByPSIxMiIgZmlsbD0iI2ZmZmZmZiIvPjxjaXJjbGUgY3g9IjU2NSIgY3k9IjQxMCIgcj0iMTYiIGZpbGw9IiNmNDNmNWUiLz48Y2lyY2xlIGN4PSI1NTAiIGN5PSI0MjAiIHI9IjEyIiBmaWxsPSIjZmZmZmZmIi8+PGNpcmNsZSBjeD0iNTgwIiBjeT0iNDIwIiByPSIxMiIgZmlsbD0iI2ZiNzE4NSIvPjwvc3ZnPg=="
+                 alt="Decoração Jardim Encantado Oh Baby com arco de balões pastéis e letreiro luminoso"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Jardim Encantado "Oh Baby"</h3>
+            <p class="card-text">Chá de bebê e aniversário com delicados painéis de borboletas em efeito 3D, arco orgânico sofisticado e paleta suave em tons pastéis.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Jardim%20Oh%20Baby%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 10. PJ Masks — Heróis de Pijama -->
+        <article class="decor-card c-indigo" data-category="super-herois">
+          <div class="card-banner" style="background: linear-gradient(135deg, #1d4ed8 0%, #16a34a 50%, #dc2626 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <path d="M12 28 Q32 12 52 28 Q44 46 32 44 Q20 46 12 28 Z" fill="#ffffff"/>
+              <ellipse cx="24" cy="30" rx="5" ry="3" fill="#1d4ed8"/>
+              <ellipse cx="40" cy="30" rx="5" ry="3" fill="#dc2626"/>
+            </svg>
+            <span class="banner-tag">PJ Masks</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">PJ Masks — Heróis de Pijama</h3>
+            <p class="card-text">Menino-Gato, Corujita e Lagartixo em cores vibrantes, painéis noturnos, prédios da cidade e arcos tricolores.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20PJ%20Masks%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 10. Mickey Mouse Clássico — FOTO REAL EMBUTIDA -->
+        <article class="decor-card c-rose" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAAKAAoBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
+                 alt="Decoração Mickey Mouse Tradicional com arco de balões vermelho, amarelo e preto"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Mickey Mouse Tradicional</h3>
+            <p class="card-text">A magia clássica da Disney com balões vermelho, amarelo e preto, pelúcias oficiais, mobília temática e mesa de doces completa.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Mickey%20Mouse%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 11. O Poderoso Chefinho — FOTO REAL EMBUTIDA -->
+        <article class="decor-card c-blue" data-category="classicos">
+          <span class="card-badge badge-real">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Montagem Real GiGi
+          </span>
+          <div class="card-img-wrap">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAAKAAoBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
+                 alt="Decoração O Poderoso Chefinho com cenografia executiva azul celeste, branco e preto"
+                 loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">O Poderoso Chefinho</h3>
+            <p class="card-text">Cenografia elegante em tons de azul celeste, preto e branco, com painel executivo fofo, maletinhas e suportes contemporâneos.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20O%20Poderoso%20Chefinho%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 12. Homem-Aranha Herói Clássico -->
+        <article class="decor-card c-indigo" data-category="super-herois">
+          <div class="card-banner" style="background: linear-gradient(135deg, #e11d48 0%, #2563eb 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="22" fill="#ffffff"/>
+              <path d="M32 10 L32 54 M10 32 L54 32 M16 16 L48 48 M16 48 L48 16" stroke="#e11d48" stroke-width="2"/>
+              <ellipse cx="26" cy="30" rx="4" ry="7" fill="#1e293b" transform="rotate(-15 26 30)"/>
+              <ellipse cx="38" cy="30" rx="4" ry="7" fill="#1e293b" transform="rotate(15 38 30)"/>
+            </svg>
+            <span class="banner-tag">Homem-Aranha</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Homem-Aranha Herói Clássico</h3>
+            <p class="card-text">Painéis duplos, cilindros estampados com teias, bolo cenográfico personalizado e arcos volumosos vermelho e azul royal.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Homem-Aranha%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 13. Homem-Aranha Cidade Noturna -->
+        <article class="decor-card c-teal" data-category="super-herois">
+          <div class="card-banner" style="background: linear-gradient(135deg, #0f172a 0%, #06b6d4 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <rect x="12" y="24" width="12" height="34" fill="#38bdf8"/>
+              <rect x="26" y="14" width="16" height="44" fill="#ffffff"/>
+              <rect x="44" y="28" width="10" height="30" fill="#38bdf8"/>
+              <circle cx="34" cy="22" r="2" fill="#ef4444"/>
+              <circle cx="34" cy="30" r="2" fill="#ef4444"/>
+              <path d="M22 18 Q32 10 42 18" stroke="#f43f5e" stroke-width="2.5" fill="none"/>
+            </svg>
+            <span class="banner-tag">Cidade Noturna</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Homem-Aranha Cidade Noturna</h3>
+            <p class="card-text">Visual metropolitano noturno com silhuetas de prédios iluminados, mangueiras de LED azul neon e atmosfera de cinema.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Homem-Aranha%20Cidade%20Noturna%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 14. Mulher-Maravilha -->
+        <article class="decor-card c-amber" data-category="super-herois">
+          <div class="card-banner" style="background: linear-gradient(135deg, #dc2626 0%, #f59e0b 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <path d="M12 24 L22 38 L32 26 L42 38 L52 24 L42 46 L32 38 L22 46 Z" fill="#ffffff"/>
+              <polygon points="32,16 35,22 32,20 29,22" fill="#ffffff"/>
+            </svg>
+            <span class="banner-tag">Mulher-Maravilha</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Mulher-Maravilha Empoderada</h3>
+            <p class="card-text">Painel com lantejoulas douradas, quadrinhos retrô, rosas vermelhas e detalhes icônicos da heroína mais famosa do mundo.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Mulher-Maravilha%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 15. Toy Story Woody & Buzz -->
+        <article class="decor-card c-blue" data-category="filmes">
+          <div class="card-banner" style="background: linear-gradient(135deg, #0284c7 0%, #eab308 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <ellipse cx="32" cy="44" rx="22" ry="12" fill="#ffffff"/>
+              <path d="M20 40 Q32 18 44 40 Z" fill="#b45309"/>
+              <polygon points="32,26 34,31 39,32 35,35 36,40 32,37 28,40 29,35 25,32 30,31" fill="#facc15"/>
+            </svg>
+            <span class="banner-tag">Toy Story Aventura</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Toy Story Woody & Buzz</h3>
+            <p class="card-text">Arco orgânico com estampa malhada de vaquinha, bolo temático de 3 andares e réplicas dos brinquedos mais queridos do cinema.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Toy%20Story%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+        <!-- 16. Monstros S.A. Mike & Sulley -->
+        <article class="decor-card c-lime" data-category="filmes">
+          <div class="card-banner" style="background: linear-gradient(135deg, #84cc16 0%, #06b6d4 100%);">
+            <svg class="theme-svg" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="34" r="18" fill="#ffffff"/>
+              <circle cx="32" cy="32" r="9" fill="#a3e635"/>
+              <circle cx="32" cy="32" r="5" fill="#0284c7"/>
+              <circle cx="34" cy="30" r="1.5" fill="#ffffff"/>
+              <path d="M26 44 Q32 48 38 44" stroke="#166534" stroke-width="2" fill="none"/>
+              <path d="M22 18 L25 24 M42 18 L39 24" stroke="#4d7c0f" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <span class="banner-tag">Monstros S.A.</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Monstros S.A. Mike & Sulley</h3>
+            <p class="card-text">Mundo divertido com cores verde-limão e azul turquesa com roxo, portas cenográficas de sustentação e miniaturas fofas.</p>
+            <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Gostei%20do%20tema%20Monstros%20S.A.%20e%20quero%20um%20or%C3%A7amento!"
+               target="_blank" rel="noopener noreferrer" class="card-cta">
+              Quero esse tema 🎈
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- AVISO SUTIL NO RODAPÉ DO PORTFÓLIO -->
+      <div class="portfolio-footer-wrap reveal-on-scroll">
+        <div class="portfolio-footer-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Mais temas e fotos reais serão adicionados em breve ao nosso catálogo online.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIFERENCIAIS COM ÍCONES VIVOS E COLORIDOS -->
+    <section class="section-wrap diferenciais-section" id="diferenciais">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+          Por Que a GiGi?
+        </span>
+        <h2 class="section-title">
+          O Cuidado Que <span class="title-gradient-vibrant">Sua Festa Merece</span>
+        </h2>
+        <p class="section-desc">
+          Cuidamos de tudo para você só se preocupar em celebrar e registrar sorrisos inesquecíveis.
+        </p>
+      </div>
+
+      <div class="dif-grid">
+        <div class="dif-card reveal-on-scroll">
+          <div class="dif-icon-wrap" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); color: #ec4899;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              <circle cx="18" cy="6" r="3"/>
+            </svg>
+          </div>
+          <h3>Decoração Completa</h3>
+          <p>Painéis redondos ou romanos, mesas cilindros, bandejas de doces, bolo cenográfico e arcos orgânicos de balões profissionais.</p>
+        </div>
+
+        <div class="dif-card reveal-on-scroll">
+          <div class="dif-icon-wrap" style="background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%); color: #0891b2;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3>Nome e Idade Personalizados</h3>
+          <p>Seu filho em evidência! Produzimos apliques especiais com o nome e a idade do aniversariante em destaque no cenário principal.</p>
+        </div>
+
+        <div class="dif-card reveal-on-scroll">
+          <div class="dif-icon-wrap" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #d97706;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3>Temas Sob Medida</h3>
+          <p>Tem um tema novo na imaginação do seu pequeno? Nós adaptamos e montamos projetos personalizados do jeitinho que sonhou.</p>
+        </div>
+
+        <div class="dif-card reveal-on-scroll">
+          <div class="dif-icon-wrap" style="background: linear-gradient(135deg, #fae8ff 0%, #f5d0fe 100%); color: #a855f7;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+          </div>
+          <h3>Letreiros Neon & Luminosos</h3>
+          <p>Iluminação moderna que faz toda a diferença nas fotos: números gigantes em LED, letreiros "Happy Birthday" e refletores cenográficos.</p>
+        </div>
+
+        <div class="dif-card reveal-on-scroll">
+          <div class="dif-icon-wrap" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #16a34a;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          </div>
+          <h3>Montagem no Local</h3>
+          <p>Nossa equipe vai até você pontualmente: montamos antes do início e desmontamos ao término, sem dor de cabeça para os anfitriões.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section class="section-wrap" id="depoimentos">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag">Histórias Reais</span>
+        <h2 class="section-title">O Que Dizem as Mamães</h2>
+        <p class="section-desc">
+          A felicidade dos pais e o brilho nos olhos das crianças são a nossa maior recompensa.
+        </p>
+      </div>
+
+      <div class="depoimentos-grid">
+        <div class="depoimento-card reveal-on-scroll">
+          <div class="depoimento-stars" aria-label="Avaliação: 5 estrelas">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="depoimento-texto">
+            “A GiGi superou todas as minhas expectativas no aniversário de 3 anos do meu filho! O tema do Homem-Aranha parecia de cinema, as cores estavam vivas e a montagem foi super pontual. Todo mundo elogiou!”
+          </p>
+          <div class="depoimento-autor">
+            <div class="avatar-circ">A</div>
+            <div class="autor-info">
+              <strong>Ana Clara Martins</strong>
+              <span>Mãe do Theo &middot; Festa de 3 anos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="depoimento-card reveal-on-scroll">
+          <div class="depoimento-stars" aria-label="Avaliação: 5 estrelas">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="depoimento-texto">
+            “Contratei o chá de revelação dos ursinhos e chorei de emoção ao entrar no salão. Os detalhes dos balões orgânicos e a mesa com o nome estavam impecáveis. Obrigada pelo carinho de sempre!”
+          </p>
+          <div class="depoimento-autor">
+            <div class="avatar-circ">J</div>
+            <div class="autor-info">
+              <strong>Juliana Ribeiro</strong>
+              <span>Mãe da Maitê &middot; Chá Revelação</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="depoimento-card reveal-on-scroll">
+          <div class="depoimento-stars" aria-label="Avaliação: 5 estrelas">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="depoimento-texto">
+            “Fiz a festa de 15 anos da minha filha e o letreiro neon com o painel de lantejoulas virou atração principal. Todo mundo tirou fotos a noite inteira. Equipe profissional e de confiança!”
+          </p>
+          <div class="depoimento-autor">
+            <div class="avatar-circ">F</div>
+            <div class="autor-info">
+              <strong>Fernanda Souza</strong>
+              <span>Mãe da Luiza &middot; Debutante 15 Anos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="como-funciona-section section-wrap" id="como-funciona">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag">Passo a Passo Simples</span>
+        <h2 class="section-title">Como Funciona a Contratação</h2>
+        <p class="section-desc">
+          Do primeiro "oi" no WhatsApp até a festa montada, descomplicamos todo o processo para você.
+        </p>
+      </div>
+
+      <div class="passos-grid">
+        <div class="passo-card reveal-on-scroll">
+          <div class="passo-numero">1</div>
+          <h3>Chama no WhatsApp</h3>
+          <p>Clique em qualquer botão do site e converse diretamente com a nossa equipe de atendimento.</p>
+        </div>
+
+        <div class="passo-card reveal-on-scroll">
+          <div class="passo-numero">2</div>
+          <h3>Conta o Tema e Data</h3>
+          <p>Informe o tema desejado, data do evento, local da montagem e o nome do aniversariante.</p>
+        </div>
+
+        <div class="passo-card reveal-on-scroll">
+          <div class="passo-numero">3</div>
+          <h3>Recebe o Orçamento</h3>
+          <p>Enviamos fotos dos cenários disponíveis, opções de pacotes e fechamos sua data na agenda com segurança.</p>
+        </div>
+
+        <div class="passo-card reveal-on-scroll">
+          <div class="passo-numero">4</div>
+          <h3>A GiGi Monta Tudo!</h3>
+          <p>Chegamos antes no dia da comemoração, deixamos o cenário perfeito e recolhemos tudo ao final da festa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO / CTA FINAL -->
+    <section class="contato-section" id="contato">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Atendimento & Orçamentos
+        </span>
+        <h2 class="section-title">
+          Fale Conosco & <span class="title-gradient-vibrant">Realize a Sua Festa</span>
+        </h2>
+        <p class="section-desc">
+          Atendimento em Pirassununga e região — montagem no local da sua festa (casa, salão ou espaço de sua escolha).
+        </p>
+      </div>
+
+      <div class="contato-wrapper reveal-on-scroll">
+        <!-- Banner de Contato Direto no WhatsApp -->
+        <div class="contato-banner">
+          <h2>Pronto pra deixar a festinha linda?</h2>
+          <p>
+            Atendimento em Pirassununga e região — montagem no local da sua festa (casa, salão ou espaço de sua escolha). Garanta a sua data antes que a nossa agenda lote!
+          </p>
+
+          <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20GiGi%20e%20quero%20um%20or%C3%A7amento%20de%20decora%C3%A7%C3%A3o%20%F0%9F%8E%88"
+             target="_blank" rel="noopener noreferrer"
+             class="btn-contato-wa">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.031 2C6.511 2 2.016 6.477 2.016 11.979c0 1.948.563 3.766 1.536 5.304L2 22l4.877-1.508a9.928 9.928 0 005.154 1.488h.004c5.52 0 10.015-4.477 10.015-9.98C22.05 6.477 17.551 2 12.031 2zm0 18.28c-1.636 0-3.238-.44-4.636-1.272l-.332-.198-3.447 1.066 1.085-3.351-.217-.344a8.232 8.232 0 01-1.263-4.202c0-4.57 3.738-8.288 8.337-8.288 4.598 0 8.336 3.718 8.336 8.288 0 4.57-3.738 8.288-8.336 8.288zm4.568-6.196c-.25-.125-1.479-.73-1.708-.813-.23-.083-.396-.125-.563.125-.167.25-.646.813-.792.98-.146.166-.292.187-.542.062-.25-.125-1.055-.389-2.01-1.24-.743-.663-1.245-1.482-1.391-1.732-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.563-1.355-.771-1.855-.203-.487-.41-.42-.563-.428l-.48-.01c-.167 0-.438.062-.667.312-.23.25-.875.855-.875 2.084 0 1.23 8.96 2.417 1.021 2.584.125.167 1.763 2.692 4.271 3.775.597.258 1.063.412 1.427.528.6.191 1.146.164 1.577.1.48-.072 1.479-.604 1.688-1.188.208-.583.208-1.083.146-1.188-.063-.104-.229-.167-.479-.292z"/>
+            </svg>
+            Chamar no WhatsApp (19) 99812-3078
+          </a>
+
+          <div class="contato-info-box">
+            <p><strong>Área de Atendimento:</strong> Pirassununga e região</p>
+            <p><strong>Montagem no Local:</strong> Levamos e montamos tudo com carinho na sua casa, salão ou chácara.</p>
+            <p><strong>Telefone / WhatsApp:</strong> (19) 99812-3078</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="footer-title">GiGi Brinquedos e Decoração</span>
+        <p>Transformando celebrações em memórias mágicas com bom gosto, dedicação e criatividade para toda a família.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#inicio">Início</a>
+        <a href="#portfolio">Portfólio</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#como-funciona">Como Funciona</a>
+        <a href="https://wa.me/5519998123078" target="_blank" rel="noopener noreferrer">WhatsApp: (19) 99812-3078</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; <span id="currentYear"></span> GiGi Brinquedos e Decoração &middot; Pirassununga e região &middot; Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5519998123078?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20GiGi%20e%20quero%20um%20or%C3%A7amento%20de%20decora%C3%A7%C3%A3o%20%F0%9F%8E%88"
+     target="_blank" rel="noopener noreferrer"
+     class="wa-float-btn"
+     aria-label="Falar com GiGi no WhatsApp agora">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12.031 2C6.511 2 2.016 6.477 2.016 11.979c0 1.948.563 3.766 1.536 5.304L2 22l4.877-1.508a9.928 9.928 0 005.154 1.488h.004c5.52 0 10.015-4.477 10.015-9.98C22.05 6.477 17.551 2 12.031 2zm0 18.28c-1.636 0-3.238-.44-4.636-1.272l-.332-.198-3.447 1.066 1.085-3.351-.217-.344a8.232 8.232 0 01-1.263-4.202c0-4.57 3.738-8.288 8.337-8.288 4.598 0 8.336 3.718 8.336 8.288 0 4.57-3.738 8.288-8.336 8.288zm4.568-6.196c-.25-.125-1.479-.73-1.708-.813-.23-.083-.396-.125-.563.125-.167.25-.646.813-.792.98-.146.166-.292.187-.542.062-.25-.125-1.055-.389-2.01-1.24-.743-.663-1.245-1.482-1.391-1.732-.146-.25-.016-.385.109-.51.112-.112.25-.292.375-.438.125-.146.167-.25.25-.417.083-.167.042-.313-.021-.438-.063-.125-.563-1.355-.771-1.855-.203-.487-.41-.42-.563-.428l-.48-.01c-.167 0-.438.062-.667.312-.23.25-.875.855-.875 2.084 0 1.23 8.96 2.417 1.021 2.584.125.167 1.763 2.692 4.271 3.775.597.258 1.063.412 1.427.528.6.191 1.146.164 1.577.1.48-.072 1.479-.604 1.688-1.188.208-.583.208-1.083.146-1.188-.063-.104-.229-.167-.479-.292z"/>
+    </svg>
+  </a>
+
+  <!-- SCRIPT JS PURO -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Atualizar ano no footer
+      const yearEl = document.getElementById('currentYear');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+      // 2. Menu mobile toggle
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const mainNav = document.getElementById('mainNav');
+      if (mobileBtn && mainNav) {
+        mobileBtn.addEventListener('click', () => {
+          mainNav.classList.toggle('open');
+        });
+
+        // Fechar ao clicar em qualquer link
+        mainNav.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', () => {
+            mainNav.classList.remove('open');
+          });
+        });
+      }
+
+      // 3. Sombra no header ao rolar
+      const header = document.getElementById('siteHeader');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      // 4. Filtro de Categorias no Portfólio (JS Puro)
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.decor-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Atualiza classes ativas
+          filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+          button.classList.add('active');
+          button.setAttribute('aria-selected', 'true');
+
+          const selectedFilter = button.getAttribute('data-filter');
+
+          // Filtra os cards com transição suave
+          cards.forEach(card => {
+            const cardCat = card.getAttribute('data-category');
+            if (selectedFilter === 'todos' || cardCat === selectedFilter) {
+              card.style.display = 'flex';
+              requestAnimationFrame(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              });
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(10px)';
+              setTimeout(() => {
+                card.style.display = 'none';
+              }, 200);
+            }
+          });
+        });
+      });
+
+      // 5. Animações de entrada com IntersectionObserver
+      const revealElements = document.querySelectorAll('.reveal-on-scroll');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+      } else {
+        // Fallback caso navegador antigo não suporte
+        revealElements.forEach(el => el.classList.add('is-visible'));
+      }
+    });
+  </script>
+<script>
+/* Skip artifact shell — fixed helpers served beside every artifact. */
+(function () {
+  "use strict";
+
+  var fmt = {
+    num: function (v, opts) { return new Intl.NumberFormat("pt-BR", opts || {}).format(v); },
+    brl: function (v) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v); },
+    pct: function (v) { return new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 }).format(v); }
+  };
+
+  // axisFmt keeps axis tick labels short (compact notation) so long values
+  // (e.g. full BRL amounts) never clip against the plot edge.
+  function axisFmt(v) {
+    return fmt.num(v, { notation: "compact", maximumFractionDigits: 1 });
+  }
+
+  // format accepts a function OR one of the fmt names ("num" | "brl" | "pct").
+  function coerceFormat(spec) {
+    if (typeof spec === "function") return spec;
+    if (typeof spec === "string" && fmt[spec]) return fmt[spec];
+    return function (v) { return fmt.num(v); };
+  }
+
+  function accent() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2563eb";
+  }
+  function mutedColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--text-muted").trim() || "#5b6472";
+  }
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+  function frame(el, w, h) {
+    var svg = svgEl("svg", { viewBox: "0 0 " + w + " " + h, role: "img" });
+    el.innerHTML = "";
+    el.appendChild(svg);
+    return svg;
+  }
+
+  // maxOf guards the axis scale: empty values would give -Infinity (truthy,
+  // so "|| 1" can't catch it) and a non-positive max would flip the chart.
+  function maxOf(values) {
+    var m = values.length ? Math.max.apply(null, values) : 0;
+    return m > 0 ? m : 1;
+  }
+
+  // bar(el, {labels:[], values:[], color?, format?}) — vertical bar chart.
+  function bar(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 12, plotH = H - padT - padB;
+    var step = plotW / n, bw = Math.min(step * 0.62, 64);
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 12, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    cfg.values.forEach(function (v, i) {
+      var bh = Math.max(0, (v / max) * plotH);
+      var x = padL + i * step + (step - bw) / 2;
+      var y = padT + plotH - bh;
+      var r = svgEl("rect", { x: x, y: y, width: bw, height: bh, rx: 4, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(v);
+      r.appendChild(t);
+      svg.appendChild(r);
+      var tx = svgEl("text", { x: x + bw / 2, y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // line(el, {labels:[], values:[], color?, format?}) — single-series line.
+  function line(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 16, plotH = H - padT - padB;
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 16, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    var pts = cfg.values.map(function (v, i) {
+      var x = padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1));
+      var y = padT + plotH - (v / max) * plotH;
+      return [x, y];
+    });
+    var d = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+    svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round" }));
+    pts.forEach(function (p, i) {
+      var c = svgEl("circle", { cx: p[0], cy: p[1], r: 3.5, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(cfg.values[i]);
+      c.appendChild(t);
+      svg.appendChild(c);
+      var tx = svgEl("text", { x: p[0], y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // donut(el, {labels:[], values:[], colors?}) — donut with center total.
+  function donut(el, cfg) {
+    var W = 320, H = 280, cx = W / 2, cy = H / 2, R = 92, r = 58;
+    var svg = frame(el, W, H);
+    var total = cfg.values.reduce(function (a, b) { return a + b; }, 0) || 1;
+    var palette = cfg.colors || [accent(), "#1baf7a", "#eda100", "#e34948", "#4a3aa7", "#e87ba4"];
+    var a0 = -Math.PI / 2;
+    cfg.values.forEach(function (v, i) {
+      var a1 = a0 + (v / total) * Math.PI * 2;
+      var large = a1 - a0 > Math.PI ? 1 : 0;
+      var p = ["M", cx + R * Math.cos(a0), cy + R * Math.sin(a0),
+        "A", R, R, 0, large, 1, cx + R * Math.cos(a1), cy + R * Math.sin(a1),
+        "L", cx + r * Math.cos(a1), cy + r * Math.sin(a1),
+        "A", r, r, 0, large, 0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), "Z"].join(" ");
+      var path = svgEl("path", { d: p, fill: palette[i % palette.length] });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + fmt.num(v) + " (" + fmt.pct(v / total) + ")";
+      path.appendChild(t);
+      svg.appendChild(path);
+      a0 = a1;
+    });
+    var center = svgEl("text", { x: cx, y: cy + 5, "text-anchor": "middle", "font-size": 20, "font-weight": 650, fill: "currentColor" });
+    center.textContent = fmt.num(total);
+    svg.appendChild(center);
+  }
+
+  window.skipShell = { fmt: fmt };
+  window.skipChart = { bar: bar, line: line, donut: donut };
+})();
+
+</script>
+</body>
+</html>
